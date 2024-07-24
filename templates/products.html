@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #121212;
+            color: #fff;
+        }
+
+        h1 {
+            color: #8c5ac9;
+            margin-bottom: 20px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: #1f1f1f;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 8px #8c5ac9;
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card img {
+            max-width: 100%;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: white;
+        }
+
+        .product-card h4 {
+            margin: 0;
+            font-size: 1.1em;
+            color: #fff;
+            padding: 0 10px;
+        }
+
+        .sorting-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #1f1f1f;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(140, 90, 201, 0.3);
+        }
+
+        .sorting-panel select {
+            background-color: #2a2a2a;
+            color: #fff;
+            border: 1px solid #8c5ac9;
+            padding: 5px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Products</h1>
+    <div class="sorting-panel">
+        <select id="sortSelect">
+            <option value="name">Sort by Name</option>
+            <option value="date">Sort by Date</option>
+        </select>
+    </div>
+    <div class="product-grid" id="productGrid">
+        {% for product in products %}
+        <div class="product-card" data-name="{{ product['product-name'] }}" data-date="{{ product['date'] }}">
+            <img src="{{ product['url'] }}" alt="{{ product['product-name'] }}">
+            <h4>{{ product['product-name'] }}</h4>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        document.getElementById('sortSelect').addEventListener('change', function() {
+            const sortBy = this.value;
+            const grid = document.getElementById('productGrid');
+            const products = Array.from(grid.children);
+
+            products.sort((a, b) => {
+                if (sortBy === 'name') {
+                    return a.dataset.name.localeCompare(b.dataset.name);
+                } else if (sortBy === 'date') {
+                    return new Date(b.dataset.date) - new Date(a.dataset.date);
+                }
+            });
+
+            products.forEach(product => grid.appendChild(product));
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>@Visionapp</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
+            color: #FFFFFF;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1F1F1F;
+            padding: 10px 20px;
+        }
+
+        .navbar h3 {
+            margin: 0;
+        }
+
+        .navbar a {
+            color: #BB86FC;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #2A2A2A;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            color: #FFFFFF;
+        }
+
+        .close {
+            color: #FFFFFF;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #BB86FC;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .Btn {
+            background-color: transparent;
+            border: none;
+            color: #BB86FC;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .Btn .sign svg {
+            fill: #BB86FC;
+            width: 24px;
+            height: 24px;
+        }
+
+        .Btn .text {
+            margin-left: 8px;
+        }
+
+        .Btn:hover .text {
+            text-decoration: underline;
+        }
+
+        form input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            background-color: #1F1F1F;
+            color: #FFFFFF;
+        }
+
+        form button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #BB86FC;
+            color: #FFFFFF;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #9B5DE5;
+        }
+
+        .csv-detail {
+            display: flex;
+            padding: 10px 20px 10px 20px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #BB86FC;
+            text-align: left;
+
+        }
+
+        .img-csv {
+            width: 100%;
+            height: auto;
+            /* max-width: 500px; */
+            margin: 0 auto;
+            display: block;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #BB86FC;
+            padding: 10px;
+            border-radius: 10px;
+
+        }
+
+        .steps {
+            color: white;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btns {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .btns button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #3d1370;
+            color: #FFFFFF;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .btns button:hover {
+            background-color: #9B5DE5;
+            color: #FFFFFF;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <h3 class="admin">Hi, Admin</h3>
+        <div>
+            <a href="#" onclick="showProductUploadModal()">Upload Product</a>
+            <a href="#" onclick="document.getElementById('csvFileInput').click()">Upload CSV</a>
+        </div>
+        <input type="file" id="csvFileInput" style="display: none;" accept=".csv" onchange="uploadCSV(event)">
+        <button class="Btn" onclick="logout()">
+            <div class="sign">
+                <svg viewBox="0 0 512 512">
+                    <path d="M502.63,233.37l-50.19-50.19c-5.79-5.79-15.14-5.79-20.93,0c-5.79,5.79-5.79,15.14,0,20.93l27.28,27.28H272.94
+                    c-8.17,0-14.8,6.63-14.8,14.8s6.63,14.8,14.8,14.8h185.86l-27.28,27.28c-5.79,5.79-5.79,15.14,0,20.93
+                    c5.79,5.79,15.14,5.79,20.93,0l50.19-50.19C508.42,248.51,508.42,239.16,502.63,233.37z" />
+                    <path
+                        d="M355.33,312.26c-8.17,0-14.8,6.63-14.8,14.8v99.19H58.39V85.74h282.14v99.19c0,8.17,6.63,14.8,14.8,14.8
+                    s14.8-6.63,14.8-14.8V70.94c0-24.05-19.57-43.62-43.62-43.62H43.59c-24.05,0-43.62,19.57-43.62,43.62v355.88
+                    c0,24.05,19.57,43.62,43.62,43.62h282.14c24.05,0,43.62-19.57,43.62-43.62v-99.19C370.13,318.89,363.5,312.26,355.33,312.26z" />
+                </svg>
+            </div>
+            <div class="text">Logout</div>
+        </button>
+    </div>
+
+    <div id="productUploadModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideProductUploadModal()">&times;</span>
+            <h2>Upload Product</h2>
+            <form id="productUploadForm" onsubmit="uploadProduct(event)">
+                <input type="text" id="productName" placeholder="Enter product name" required />
+                <input type="text" id="productImageUrl" placeholder="Enter product image URL" required />
+                <button type="submit">Upload</button>
+            </form>
+        </div>
+    </div>
+    <h4 class="steps">steps:</h4>
+    <div class="csv-detail">
+        <div class="csv-container">
+            <h2>CSV Detail</h2>
+            <p>
+            <h6>csv should contain two columns i.e <strong
+                    style="color: white; font-weight: bold; font-size: 18px; ">'product-name'</strong> and <strong
+                    style="color: white; font-weight: bold; font-size: 18px; ">'url'</strong></h6>
+            <h5>CSV Structure</h5>
+            <h6 style="color:white">example</h6>
+            <div class="img-csv">
+                <img src="{{url_for('static', filename='images/image.png')}}" alt="CSV Example" />
+            </div>
+            <h6>ensure the file encoding (e.g., UTF-8)</h6>
+            <h5 style="color:white">to check product is upload you need to, login as user? and search it by name or
+                <br>view it in view bucket products</h3>
+                </p>
+        </div>
+    </div>
+
+    <div class="btns">
+        <button class="Btns" onclick="userlogin()">USER</button>
+
+        <button class="Btns" onclick="ViewBucket()"> Bucket Products</button>
+
+    </div>
+
+
+
+    <script>
+
+        function ViewBucket() {
+            window.location.href = '/products';
+        }
+
+        function showProductUploadModal() {
+            document.getElementById('productUploadModal').style.display = 'block';
+        }
+
+        function hideProductUploadModal() {
+            document.getElementById('productUploadModal').style.display = 'none';
+        }
+
+        async function uploadCSV(event) {
+            const fileInput = event.target;
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+            const response = await fetch('/api/merge_csv', {
+                method: 'POST',
+                body: formData,
+            });
+            const data = await response.json();
+            alert(data.message || data.error);
+        }
+
+        async function uploadProduct(event) {
+            event.preventDefault();
+            const productName = document.getElementById('productName').value;
+            const productImageUrl = document.getElementById('productImageUrl').value;
+            const response = await fetch('/api/add_product', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 'product-name': productName, url: productImageUrl }),
+            });
+            const data = await response.json();
+            alert(data.message || data.error);
+            hideProductUploadModal();
+        }
+
+        function logout() {
+            // Implement logout functionality
+            window.location.href = '/';
+        }
+        function userlogin() {
+            window.location.href = '/user_login';
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <title>@Visionapp</title>
+  <style>
+    :root {
+      --primary-color: #8817f1;
+
+      --secondary-color: #ec19c9;
+
+      --background-color: #020003;
+
+      --text-color: #ecf0f1;
+
+      --card-background: #34495e;
+
+      --navbar-color: #8817f1;
+
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      min-height: 100vh;
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
+
+    .navbar {
+      background-color: var(--navbar-color);
+      width: 250px;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      padding: 12px 20px;
+      margin: 10px 0;
+      border-radius: 5px;
+      transition: background-color 0.3s, transform 0.2s;
+      width: 100%;
+      text-align: center;
+    }
+
+    .navbar a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .container {
+      margin-left: 250px;
+      padding: 40px;
+      width: calc(100% - 250px);
+    }
+
+    h1 {
+      color: var(--primary-color);
+      margin-bottom: 30px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 2.5rem;
+    }
+
+    .search-section {
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    form input[type="text"],
+    form input[type="file"],
+    form input[type="submit"] {
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+
+    form input[type="text"] {
+      width: 60%;
+      border: 2px solid var(--primary-color);
+      transition: border-color 0.3s;
+    }
+
+    form input[type="text"]:focus {
+      outline: none;
+      border-color: var(--secondary-color);
+    }
+
+    form input[type="file"] {
+      width: 60%;
+      border: 2px solid var(--primary-color);
+      transition: border-color 0.3s;
+    }
+
+    form input[type="file"]:focus {
+      outline: none;
+      border-color: var(--secondary-color);
+    }
+
+    form input[type="submit"] {
+      padding: 12px 24px;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    form input[type="submit"]:hover {
+      background-color: var(--secondary-color);
+    }
+
+    .cards-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background-color: var(--card-background);
+      border-radius: 10px;
+      box-shadow: 0 4px 8px #8c5ac9;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card p {
+      padding: 15px;
+      margin: 0;
+      font-weight: bold;
+      color: var(--text-color);
+      text-align: center;
+    }
+
+    .Btn {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: 45px;
+      height: 45px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      overflow: hidden;
+      transition-duration: 0.3s;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+      background-color: var(--secondary-color);
+    }
+
+    .sign {
+      width: 100%;
+      transition-duration: 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sign svg {
+      width: 18px;
+    }
+
+    .sign svg path {
+      fill: white;
+    }
+
+    .text {
+      position: absolute;
+      right: 0%;
+      width: 0%;
+      opacity: 0;
+      color: white;
+      font-size: 1.2em;
+      font-weight: 600;
+      transition-duration: 0.3s;
+    }
+
+    .Btn:hover {
+      width: 125px;
+      border-radius: 40px;
+      transition-duration: 0.3s;
+    }
+
+    .Btn:hover .sign {
+      width: 30%;
+      transition-duration: 0.3s;
+      padding-left: 20px;
+    }
+
+    .Btn:hover .text {
+      opacity: 1;
+      width: 70%;
+      transition-duration: 0.3s;
+      padding-right: 10px;
+    }
+
+    .Btn:active {
+      transform: translate(2px, 2px);
+    }
+
+    .loading-wave {
+      width: 300px;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      margin: 0 auto;
+    }
+
+    .loading-bar {
+      width: 20px;
+      height: 10px;
+      margin: 0 5px;
+      background-color: var(--primary-color);
+      border-radius: 5px;
+      animation: loading-wave-animation 1s ease-in-out infinite;
+    }
+
+    .loading-bar:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+
+    .loading-bar:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+
+    .loading-bar:nth-child(4) {
+      animation-delay: 0.3s;
+    }
+
+    @keyframes loading-wave-animation {
+      0% {
+        height: 10px;
+      }
+
+      50% {
+        height: 50px;
+      }
+
+      100% {
+        height: 10px;
+      }
+    }
+
+    .search-input-container {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .search-icons {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+    }
+
+    .search-icon {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 5px;
+      color: var(--primary-color);
+      transition: color 0.3s;
+    }
+
+    .search-icon:hover {
+      color: var(--secondary-color);
+    }
+
+    #productNameInput {
+      width: 100%;
+      padding: 12px;
+      padding-right: 80px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 2px solid var(--primary-color);
+      transition: border-color 0.3s;
+    }
+
+    #productNameInput:focus {
+      outline: none;
+      border-color: var(--secondary-color);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="navbar">
+    <button class="Btn" onclick="logout()">
+      <div class="sign">
+        <svg viewBox="0 0 512 512">
+          <path
+            d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
+          </path>
+        </svg>
+      </div>
+    </button>
+  </div>
+
+  <div class="container">
+    <h1>Google Vision App</h1>
+
+    <!-- Search by Name Form -->
+    <div class="search-section">
+      <form id="unifiedSearchForm" class="search-form">
+        <div class="search-input-container">
+          <input type="text" id="productNameInput" placeholder="Enter product name or  upload image" />
+          <div class="search-icons">
+            <label for="imageInput" class="search-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v4h4v2h-4v4h-2v-4H7v-2h4V7z" />
+              </svg>
+            </label>
+            <input type="file" id="imageInput" accept="image/*" style="display: none;" />
+            <button type="submit" class="search-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                <path
+                  d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+              </svg>
+            </button>
+            <button type="button" id="clearSearchBtn" class="search-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                <path
+                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Loading indicator -->
+    <div id="loadingWave" class="loading-wave" style="display: none;">
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+    </div>
+
+    <!-- Results Container -->
+    <div class="cards-container" id="resultsContainer"></div>
+  </div>
+
+  <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', fetchInitialProducts);
+
+    document.getElementById('unifiedSearchForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const productNameInput = document.getElementById('productNameInput');
+      const imageInput = document.getElementById('imageInput');
+
+      if (imageInput.files.length > 0) {
+        searchByImage(imageInput.files[0]);
+      } else if (productNameInput.value.trim() !== '') {
+        searchByName(productNameInput.value.trim());
+      } else {
+        alert('Please enter a product name or select an image to search.');
+      }
+    });
+
+    document.getElementById('imageInput').addEventListener('change', function (event) {
+      const fileName = event.target.files[0]?.name;
+      if (fileName) {
+        document.getElementById('productNameInput').value = fileName;
+      }
+    });
+
+    function logout() {
+      sessionStorage.clear();
+      window.location.href = '/';
+    }
+
+    function showLoadingWave() {
+      document.getElementById('loadingWave').style.display = 'flex';
+    }
+
+    function hideLoadingWave() {
+      document.getElementById('loadingWave').style.display = 'none';
+    }
+
+    async function fetchInitialProducts() {
+      showLoadingWave();
+      console.log('Attempting to fetch initial products...');
+
+      try {
+        const response = await fetch('/api/initial_products');
+        console.log('Response status:', response.status);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Received data:', data);
+        hideLoadingWave();
+        displayResults(data);
+      } catch (error) {
+        console.error('Error fetching initial products:', error);
+        hideLoadingWave();
+        alert(`An error occurred while fetching initial products: ${error.message}`);
+        displayFallbackProducts();
+      }
+    }
+
+    function displayFallbackProducts() {
+      const fallbackProducts = [
+        { 'product-name': 'Fallback Product 1', 'image-url': 'https://via.placeholder.com/150' },
+        { 'product-name': 'Fallback Product 2', 'image-url': 'https://via.placeholder.com/150' },
+        { 'product-name': 'Fallback Product 3', 'image-url': 'https://via.placeholder.com/150' },
+      ];
+      displayResults(fallbackProducts);
+    }
+
+    async function searchByName(productName) {
+      showLoadingWave();
+
+      try {
+        const response = await fetch('/api/search_product', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ 'product-name': productName }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        hideLoadingWave();
+        displayResults(data);
+      } catch (error) {
+        console.error('Error:', error);
+        hideLoadingWave();
+        alert('An error occurred while searching by name');
+      }
+    }
+
+    async function searchByImage(file) {
+      showLoadingWave();
+
+      const formData = new FormData();
+      formData.append('image', file);
+
+      try {
+        const response = await fetch('/api/upload_image', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        hideLoadingWave();
+        displayResults(data);
+      } catch (error) {
+        console.error('Error:', error);
+        hideLoadingWave();
+        alert('An error occurred while searching by image. Please check the console for details.');
+      }
+    }
+
+    function displayResults(products) {
+      const resultsContainer = document.getElementById('resultsContainer');
+
+      if (products.length > 0) {
+        resultsContainer.innerHTML = ''; // Clear previous results only if there are new results
+      }
+
+      if (products.length === 0) {
+        resultsContainer.innerHTML = '<p>No products found</p>';
+        return;
+      }
+
+      products.forEach((product) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        // Adjust these fields based on your actual data structure
+        const imageUrl = product['image-url'] || product['url'] || 'https://via.placeholder.com/150';
+        const productName = product['product-name'] || 'Unknown Product';
+
+        card.innerHTML = `
+      <img src="${imageUrl}" alt="${productName}" />
+      <p>${productName}</p>
+    `;
+
+        resultsContainer.appendChild(card);
+      });
+    }
+
+    function clearSearch() {
+      document.getElementById('productNameInput').value = '';
+      document.getElementById('imageInput').value = '';
+      document.getElementById('resultsContainer').innerHTML = '';
+      fetchInitialProducts(); // Fetch initial products after clearing
+    }
+
+    document.getElementById('clearSearchBtn').addEventListener('click', clearSearch);
+  </script>
+</body>
+
+</html>

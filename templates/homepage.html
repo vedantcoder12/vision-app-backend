@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision App</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Include Font Awesome CDN link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-lQRDCe5sfeprqn6Dnn3wFwma3tmhvf3sS+TdYWYe2PK94HZMIvv3WwNtU0gC5M6emDOy4geP15/EwCHUwNzG3A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #020003;
+            color: #8817f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .cart-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #4caf50;
+            /* Green */
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+            /* Darker green on hover */
+        }
+
+        .admin {
+            background-color: #f44336;
+            /* Red */
+        }
+
+        .admin:hover {
+            background-color: #d32f2f;
+            /* Darker red on hover */
+        }
+
+        .user {
+            background-color: #2196f3;
+            /* Blue */
+        }
+
+        .user:hover {
+            background-color: #1976d2;
+            /* Darker blue on hover */
+        }
+
+        @media screen and (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .button {
+                padding: 10px 20px;
+            }
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: 10px;
+            background-color: #8817f1;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Date display */
+        .date-display {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.2rem;
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 id="typed">Google Vision App</h1>
+        <!-- Use the correct Font Awesome class for the shopping cart icon -->
+        <i class="fas fa-shopping-cart cart-icon"></i>
+
+        <div class="buttons">
+            <a href="{{ url_for('admin_login') }}" class="button admin">Admin Panel</a>
+            <a href="{{ url_for('user_login') }}" class="button user">User Dashboard</a>
+        </div>
+
+
+    </div>
+    <div class="footer">
+        <footer>&copy; 2024 Vision App. All rights reserved.</footer>
+    </div>
+    <!-- Date display -->
+   
+    <!-- Include Typed.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script>
+        var typed = new Typed('#typed', {
+            strings: ["Vision App", "Google Vision App"],
+            typeSpeed: 50,
+        });
+
+        // Function to update the date display
+       
+    </script>
+</body>
+
+</html>
